@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CobaSQLite")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+68e6bb0660fdfb0c798f5e0995bfe11b8fcf7381")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+d25aa30134f3eb7684f9a2447a93cee720318912")]
 [assembly: System.Reflection.AssemblyProductAttribute("CobaSQLite")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CobaSQLite")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
