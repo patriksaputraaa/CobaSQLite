@@ -4,16 +4,18 @@ namespace CobaSQLite;
 
 public class CategoryRepository
 {
-    string _dbPath;
+    private string _dbPath;
+    private SQLiteAsyncConnection conn;
 
     public string StatusMessage { get; set; }
 
-    // TODO: Add variable for the SQLite connection
-    //private SQLiteConnection conn;
-    private SQLiteAsyncConnection conn;
-    private async void Init()
+    public CategoryRepository(string dbPath)
     {
-        // TODO: Add code to initialize the repository
+        _dbPath = dbPath;
+    }
+
+    private async Task Init()
+    {
         if (conn != null)
             return;
 
@@ -21,51 +23,84 @@ public class CategoryRepository
         await conn.CreateTableAsync<Category>();
     }
 
-    public CategoryRepository(string dbPath)
+    public async Task AddNewCategory(string name, string description)
     {
-        _dbPath = dbPath;
-    }
-
-    public void AddNewCategory(string name, string description)
-    {
-        int result = 0;
         try
         {
-            // TODO: Call Init()
-            Init();
-            // basic validation to ensure a name was entered
+            await Init();
+
             if (string.IsNullOrEmpty(name))
                 throw new Exception("Valid name required");
             if (string.IsNullOrEmpty(description))
-                throw new Exception("Valid desc required");
-            // TODO: Insert the new person into the database
-            result = conn.Insert(new Category { 
+                throw new Exception("Valid description required");
+
+            var result = await conn.InsertAsync(new Category
+            {
                 Name = name,
                 Description = description
             });
 
-            StatusMessage = string.Format("{0} record(s) added (Name: {1}, Description: {2})", result, name, description);
+            StatusMessage = $"{result} record(s) added (Name: {name}, Description: {description})";
         }
         catch (Exception ex)
         {
-            StatusMessage = string.Format("Failed to add {0}. Error: {1}", name, ex.Message);
+            StatusMessage = $"Failed to add {name}. Error: {ex.Message}";
         }
-
     }
 
-    public List<Category> GetAllCategory()
+    public async Task<List<Category>> GetAllCategory()
     {
-        // TODO: Init then retrieve a list of Person objects from the database into a list
         try
         {
-            Init();
-            return conn.Table<Category>().ToList();
+            await Init();
+            return await conn.Table<Category>().ToListAsync();
         }
         catch (Exception ex)
         {
-            StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
+            StatusMessage = $"Failed to retrieve data. Error: {ex.Message}";
         }
 
         return new List<Category>();
+    }
+
+    public async Task UpdateCategory(int id, string name, string description)
+    {
+        try
+        {
+            await Init();
+
+            var category = await conn.FindAsync<Category>(id);
+            if (category == null)
+                throw new Exception($"Category with ID {id} not found.");
+
+            category.Name = name;
+            category.Description = description;
+
+            var result = await conn.UpdateAsync(category);
+            StatusMessage = $"{result} record(s) updated (ID: {id}, Name: {name}, Description: {description})";
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Failed to update category. Error: {ex.Message}";
+        }
+    }
+
+    public async Task DeleteCategory(int id)
+    {
+        try
+        {
+            await Init();
+
+            var category = await conn.FindAsync<Category>(id);
+            if (category == null)
+                throw new Exception($"Category with ID {id} not found.");
+
+            var result = await conn.DeleteAsync(category);
+            StatusMessage = $"{result} record(s) deleted (ID: {id})";
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Failed to delete category. Error: {ex.Message}";
+        }
     }
 }
