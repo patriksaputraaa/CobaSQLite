@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CobaSQLite.Pages.CategoryPage" 
+             BackgroundColor="{DynamicResource Light}">
+
+    <Grid Padding="10" RowSpacing="10" ColumnSpacing="5"
+          RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
+
+        <!-- Entry for Category Name -->
+        <Entry x:Name="name"
+               Placeholder="Enter name"
+               Grid.Row="0"
+               Margin="0,0,0,10" />
+
+        <!-- Entry for Category Description -->
+        <Entry x:Name="description"
+               Placeholder="Enter description"
+               Grid.Row="1"
+               Margin="0,0,0,10" />
+
+        <!-- Button to Add Category -->
+        <Button Text="Add Category"
+                Grid.Row="2"
+                Clicked="OnNewButtonClicked" />
+
+        <!-- Status Message -->
+        <Label x:Name="statusMessage"
+               Grid.Row="3"
+               TextColor="{StaticResource Primary}"
+               FontAttributes="Italic"
+               HorizontalOptions="Center" />
+
+        <!-- Button to Get All Categories -->
+        <Button Text="Get All Categories"
+                Grid.Row="4"
+                Clicked="OnGetButtonClicked" />
+
+        <!-- CollectionView to Display Categories -->
+        <CollectionView x:Name="categoryList" Grid.Row="5" Margin="0,10,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="Auto,2*">
+                        <!-- Display Category ID -->
+                        <Label Text="{Binding Id}" 
+                               TextColor="{StaticResource Primary}" />
+
+                        <!-- Display Category Name -->
+                        <Label Grid.Column="1" 
+                               Text="{Binding Name}" 
+                               TextColor="{StaticResource Primary}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

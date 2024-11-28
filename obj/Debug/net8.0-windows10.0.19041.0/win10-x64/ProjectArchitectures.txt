@@ -1,0 +1,1 @@
+D:\GitHub\ProgMob\CobaSQLite\CobaSQLite.csproj;x64

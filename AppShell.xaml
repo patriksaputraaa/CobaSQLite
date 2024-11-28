@@ -7,9 +7,14 @@
     Shell.FlyoutBehavior="Disabled"
     Title="CobaSQLite">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.FlyoutHeader>
+        <Grid HeightRequest="100" BackgroundColor="DarkSlateBlue">
+            <Label Text="MENU"></Label>
+        </Grid>
+    </Shell.FlyoutHeader>
 
+    <FlyoutItem Title="Category" Icon="moon.png">
+        <ShellContent Title="Moon" Icon="moon.png"
+            ContentTemplate="{DataTemplate local:Pages.CategoryPage}" />
+    </FlyoutItem>
 </Shell>
