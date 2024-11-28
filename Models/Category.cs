@@ -7,7 +7,7 @@ using SQLite;
 
 namespace CobaSQLite.Models
 {
-    [Table("people")]
+    [Table("category")]
     public class Category
     {
         [PrimaryKey, AutoIncrement]
